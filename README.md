@@ -1,11 +1,13 @@
-# router-vue
+# player-Vue2
 
-## git clone
+## fontend
+
+### git clone
 ```
-git clone https://github.com/scurrypf/player-vue2.git
+git clone https://github.com/scurrypf/player-Vue2.git
 ```
 
-## Project setup
+### Project setup
 ```
 npm install
 ```
@@ -23,6 +25,18 @@ npm run build
 ### Lints and fixes files
 ```
 npm run lint
+```
+
+## backend
+```
+cd nodejs-koa/ 切换目录
+npm install
+node index.js 启动后端
+```
+## login
+```
+username:admin/kokomi
+password:123456
 ```
 
 ### Customize configuration
