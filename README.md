@@ -1,6 +1,6 @@
 # player-Vue2
 
-## fontend
+## frontend
 
 ### git clone
 ```
