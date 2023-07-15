@@ -19,7 +19,7 @@ http.interceptors.request.use((config) => {
         return config;
     }
     config.headers['token'] = sessionStorage.getItem('token')
-    console.log('interceptors', config)
+    // console.log('interceptors', config)
     return config;
 })
 
