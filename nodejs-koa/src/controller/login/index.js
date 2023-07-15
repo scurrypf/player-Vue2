@@ -1,5 +1,5 @@
 const {suc,failure } = require('../../utils/res')
-const {createToken} = require('../../service/token')
+const {createToken, createRefreshToken} = require('../../service/token')
 const { userValid , adminValid} = require('../../service/userValid')
 
 async function loginCtl(ctx){
@@ -10,9 +10,10 @@ async function loginCtl(ctx){
     let valid = await userValid(user);
         if(valid){
             const token = createToken(ctx.request.body.username,ctx.request.body.pass);
-            ctx.body = suc({token});
+            const refresh_token = createRefreshToken(ctx.request.body.pass);
+            ctx.body = suc({token, refresh_token});
         }else{
-            ctx.body = failure('请求失败','lll');
+            ctx.body = failure('请求失败', 'lll');
         }
 }
 

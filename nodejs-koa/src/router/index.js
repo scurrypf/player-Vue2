@@ -6,6 +6,7 @@ const {queryAll,queryUserFont,queryAdminall,queryPlayer,queryPlayerall,queryPlay
 const {addUser,addPlayer,addPlayerdata,addSales} = require('../controller/SQL/add');
 const {deleteUser,deletePlayer,deletePlayerdata,deleteSales} = require('../controller/SQL/delete');
 const {updateUser,updatePlayer,updatePlayerdata,updateSales,updateAdmin} = require('../controller/SQL/update');
+const {isRefreshToken} = require('../controller/refresh/index')
 
 
 const router = new KoaRouter({
@@ -46,6 +47,9 @@ router.post('/login',loginCtl);
 router.post('/adminlogin',adminLoginCtl);
 router.get('/admin/select',queryAdminall);
 router.post('/admin/update',updateAdmin);
+
+// refresh token刷新token
+router.post('/refresh', isRefreshToken);
 
 // 上传文件
 router.post('/uploadsingle',uploadSingle);

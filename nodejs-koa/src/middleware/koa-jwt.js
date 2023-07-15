@@ -5,7 +5,8 @@ const whiteList = [
     '/api/login',
     '/',
     '/download',
-    '/api/adminlogin'
+    '/api/adminlogin',
+    '/api/refresh'
 ]
 
 const isValid = async function(ctx,next){
@@ -13,7 +14,7 @@ const isValid = async function(ctx,next){
     if( ctx.request.method === 'OPTIONS' || whiteList.includes(url) || verifyToken(ctx.request.header.token)){
         await next()
     }else{
-        ctx.body = failure('TOKEN已失效')
+        ctx.body = failure('TOKEN已失效', 401)
     }
 }
 
