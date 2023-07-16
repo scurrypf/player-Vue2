@@ -28,14 +28,46 @@ http.interceptors.request.use((config) => {
 /**发送刷新token的请求 */ 
 const refreshToken = function(){
     let refresh_token = localStorage.getItem('refresh_token');
-    http.post('/refresh', { refreshToken: refresh_token });
+    return http.post('/refresh', { refreshToken: refresh_token });
 }
 
+let isRefreshing = false;// 防止多次请求刷新token
+// requests数组用于处理同时多次请求时,将第一次之后的请求存储起来，然后一并执行
+let requests = [];
 // 响应拦截器，拦截token过期的响应
 http.interceptors.response.use((response) => {
     return response;
-}, (erro) => {
-    
+}, (error) => {
+    if(!error.response){
+        return Promise.reject(error);
+    }
+    if(error.response.statuscode === 401){
+        const { config } = error;
+        if(!isRefreshing){
+            isRefreshing = true;
+            return refreshToken().then((res) => {
+                const { token } = res.data;
+                localStorage.setItem('token', token);
+                config.headers['token'] = token;
+                requests.forEach((ele) => {
+                    ele(token);
+                })
+                requests = [];
+                return http(config);
+            }).catch(() => {
+                return Promise.reject(error);
+            }).finally(() => {
+                isRefreshing = false;
+            })
+        }else{
+            return new Promise((resolve) => {
+                requests.push((token) => {
+                    config.headers['token'] = token;
+                    resolve(http(config));
+                })
+            })
+        }
+    }
 })
 
 export{
