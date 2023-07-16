@@ -25,7 +25,8 @@ async function adminLoginCtl(ctx){
     let valid = await adminValid(user);
         if(valid){
             const token = createToken(ctx.request.body.username,ctx.request.body.pass);
-            ctx.body = suc({token});
+            const refresh_token = createRefreshToken(ctx.request.body.pass);
+            ctx.body = suc({token, refresh_token});
         }else{
             ctx.body = failure('请求失败','lll');
         }
