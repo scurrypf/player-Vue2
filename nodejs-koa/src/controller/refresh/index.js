@@ -8,7 +8,7 @@ function isRefreshToken(ctx){
         let token = createToken('kokomi', '123456');
         ctx.body = suc({ token });
     }else{
-        ctx.body = failure('登录过期,请重新登录');
+        ctx.body = failure('登录过期,请重新登录', 444);
     }
 }
 

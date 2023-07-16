@@ -82,8 +82,10 @@ export default {
             type: 'success'
           });
           const token = await data.data.token;
-          console.log(token)
-          sessionStorage.setItem('token', token);
+          const refresh_token = await data.data.refresh_token;
+          // console.log(token, refresh_token);
+          localStorage.setItem('token', token);
+          localStorage.setItem('refresh_token', refresh_token);
           this.$router.push({ path: `/main/${this.user}`, query: { user: this.user } })
         } else {
           this.$message.error('登录失败，账号或密码错误');
@@ -97,8 +99,10 @@ export default {
             type: 'success'
           });
           const token = await data.data.token;
-          // console.log(token)
-          sessionStorage.setItem('token', token);
+          const refresh_token = await data.data.refresh_token;
+          // console.log(token, refresh_token);
+          localStorage.setItem('token', token);
+          localStorage.setItem('refresh_token', refresh_token);
           this.$router.push({ path: `/main/${this.user}`, query: { user: this.user } })
         } else {
           this.$message.error('登录失败，账号或密码错误');

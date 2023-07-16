@@ -92,7 +92,7 @@ const router = new VueRouter({
 
 
 router.beforeEach((to,from,next)=>{
-  const isZpf = sessionStorage.getItem('token');
+  const isZpf = localStorage.getItem('token');
   if (to.path !== '/' && !isZpf) next({ path: '/' })
   else next()
 })

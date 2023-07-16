@@ -14,13 +14,28 @@ const http = axios.create({
     // }
 })
 
+
+// 请求拦截器，在请求里面加上token
 http.interceptors.request.use((config) => {
     if (config.url === '/api/login') {
         return config;
     }
-    config.headers['token'] = sessionStorage.getItem('token')
+    config.headers['token'] = localStorage.getItem('token')
     // console.log('interceptors', config)
     return config;
+})
+
+/**发送刷新token的请求 */ 
+const refreshToken = function(){
+    let refresh_token = localStorage.getItem('refresh_token');
+    http.post('/refresh', { refreshToken: refresh_token });
+}
+
+// 响应拦截器，拦截token过期的响应
+http.interceptors.response.use((response) => {
+    return response;
+}, (erro) => {
+    
 })
 
 export{
